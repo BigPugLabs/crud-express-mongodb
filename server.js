@@ -64,7 +64,6 @@ MongoClient.connect(DB_CONNECTION)
             )
                 .then(result => {
                     res.json("Success")
-                    console.log(result)
                 })
                 .catch(error => console.error(error))
         })
@@ -86,11 +85,3 @@ MongoClient.connect(DB_CONNECTION)
         app.listen(PORT, () => console.log(`listening on ${PORT}`))
     })
     .catch(error => console.error(error))
-
-// Handlers
-// app.get('/', (req, res) => {
-//     res.sendFile(__dirname + '/index.html')
-// })
-// app.post('/quotes', (req, res) => {
-//     console.log(req.body)
-// })
