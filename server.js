@@ -27,6 +27,8 @@ MongoClient.connect(DB_CONNECTION)
 
         // middleware
         app.use(bodyParser.urlencoded({ extended: true }))
+        app.use(bodyParser.json())
+        app.use(express.static('public'))
 
         // handlers
         app.get('/', (req, res) => {
@@ -39,10 +41,29 @@ MongoClient.connect(DB_CONNECTION)
         app.post('/quotes', (req, res) => {
             quotesCollection.insertOne(req.body)
                 .then(result => {
-                    console.log(result)
+                    //console.log(result)
                     res.redirect('/')
                 })
                 .catch(error => console.error(error))
+        })
+        app.put('/quotes', (req, res) => {
+            quotesCollection.findOneAndUpdate(
+                { name: "Ricky" },
+                {
+                    $set: {
+                        name: req.body.name,
+                        quote: req.body.quote
+                    }
+                },
+                {
+                    upsert: true
+                }
+            )
+            .then(result => {
+                res.json("Success")
+                console.log(result)
+            })
+            .catch(error=> console.error(error))
         })
 
         // server start
