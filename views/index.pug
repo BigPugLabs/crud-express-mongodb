@@ -4,25 +4,27 @@ html(lang=en)
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel='stylesheet', type='text/css', href='/css/main.css')
     title TPB Rickyisms
   
-  body
-    h1 Kill 2 birds with one stone
-    form(action='/quotes' method='POST')
-      input(type="text" placeholder="name" name="name")
-      input(type="text" placeholder="quote" name="quote")
-      button(type="submit") Submit
-    h2 Quotes 
-    ul.quotes 
-    each quote in quotes 
-      li.quote
-        span #{quote.name}: 
-        span #{quote.quote}
-    section 
+  body.is-preload
+    section.main.style1
+      h1.inner Kill 2 birds with one stone
+      form(action='/quotes' method='POST')
+        input(type="text" placeholder="name" name="name")
+        input(type="text" placeholder="quote" name="quote")
+        button(type="submit") Submit
+      h2 Quotes 
+      ul.quotes 
+      each quote in quotes 
+        li.quote
+          span #{quote.name}: 
+          span #{quote.quote}
+    section.main.style2 
       h2 The trailer park supervisor
       p Mr. Lahey wants to clean up the trailer park and clear away any signs of criminal activity
       button#update-button Replace Ricky's words with liquor philosophy
-    section 
+    section.main.style1 
       h2 The liquor 
       p Perhaps giving Mr. Lahey a little teeny drink will make him happy?
       button#delete-button Don't go against the grain of the liquor
