@@ -31,6 +31,7 @@ MongoClient.connect(DB_CONNECTION)
         app.use(express.static('public'))
 
         // handlers
+        // renders default page
         app.get('/', (req, res) => {
             db.collection('quotes').find().toArray()
                 .then(results => {
@@ -38,6 +39,7 @@ MongoClient.connect(DB_CONNECTION)
                 })
                 .catch(error => console.error(error))
         })
+        // adds data to DB
         app.post('/quotes', (req, res) => {
             quotesCollection.insertOne(req.body)
                 .then(result => {
@@ -46,6 +48,7 @@ MongoClient.connect(DB_CONNECTION)
                 })
                 .catch(error => console.error(error))
         })
+        // replaces quote with data from browser JS
         app.put('/quotes', (req, res) => {
             quotesCollection.findOneAndUpdate(
                 { name: "Ricky" },
@@ -59,11 +62,24 @@ MongoClient.connect(DB_CONNECTION)
                     upsert: true
                 }
             )
+                .then(result => {
+                    res.json("Success")
+                    console.log(result)
+                })
+                .catch(error => console.error(error))
+        })
+        // delete based on browser data (!)
+        app.delete('/quotes', (req, res) => {
+            quotesCollection.deleteOne(
+                { name: req.body.name }
+            )
             .then(result => {
-                res.json("Success")
-                console.log(result)
+                if (result.deletedCount == 0) {
+                    return res.json('No quote to delete')
+                }
+                res.json('Deleted Lahey quote')
             })
-            .catch(error=> console.error(error))
+            .catch(error => console.error(error))
         })
 
         // server start
