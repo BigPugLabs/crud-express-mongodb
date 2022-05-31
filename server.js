@@ -23,7 +23,7 @@ MongoClient.connect(DB_CONNECTION)
         const quotesCollection = db.collection("quotes")
 
         // template engine
-        app.set('view engine', 'ejs')
+        app.set('view engine', 'pug')
 
         // middleware
         app.use(bodyParser.urlencoded({ extended: true }))
@@ -35,7 +35,8 @@ MongoClient.connect(DB_CONNECTION)
         app.get('/', (req, res) => {
             db.collection('quotes').find().toArray()
                 .then(results => {
-                    res.render('index.ejs', { quotes: results })
+                    console.log(results)
+                    res.render('index.pug', { quotes: results })
                 })
                 .catch(error => console.error(error))
         })
