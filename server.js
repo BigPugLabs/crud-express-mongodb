@@ -35,7 +35,6 @@ MongoClient.connect(DB_CONNECTION)
         app.get('/', (req, res) => {
             db.collection('quotes').find().toArray()
                 .then(results => {
-                    console.log(results)
                     res.render('index.pug', { quotes: results })
                 })
                 .catch(error => console.error(error))
@@ -44,7 +43,6 @@ MongoClient.connect(DB_CONNECTION)
         app.post('/quotes', (req, res) => {
             quotesCollection.insertOne(req.body)
                 .then(result => {
-                    //console.log(result)
                     res.redirect('/')
                 })
                 .catch(error => console.error(error))
@@ -73,13 +71,13 @@ MongoClient.connect(DB_CONNECTION)
             quotesCollection.deleteOne(
                 { name: req.body.name }
             )
-            .then(result => {
-                if (result.deletedCount == 0) {
-                    return res.json('No quote to delete')
-                }
-                res.json('Deleted Lahey quote')
-            })
-            .catch(error => console.error(error))
+                .then(result => {
+                    if (result.deletedCount == 0) {
+                        return res.json('No quote to delete')
+                    }
+                    res.json('Deleted Lahey quote')
+                })
+                .catch(error => console.error(error))
         })
 
         // server start
